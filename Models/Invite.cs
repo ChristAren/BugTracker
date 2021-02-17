@@ -30,9 +30,6 @@ namespace BugTracker.Models
 
         public virtual BTUser Invitor { get; set; }
 
-        public virtual BTUser Invitee
-        {
-            get; set;
-        }
+        public virtual BTUser Invitee { get; set; }
     }
 }

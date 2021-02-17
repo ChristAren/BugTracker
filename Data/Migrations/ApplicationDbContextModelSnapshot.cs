@@ -19,6 +19,21 @@ namespace BugTracker.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.3");
 
+            modelBuilder.Entity("BTUserProject", b =>
+                {
+                    b.Property<string>("MembersId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("ProjectsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("MembersId", "ProjectsId");
+
+                    b.HasIndex("ProjectsId");
+
+                    b.ToTable("BTUserProject");
+                });
+
             modelBuilder.Entity("BugTracker.Models.BTUser", b =>
                 {
                     b.Property<string>("Id")
@@ -27,7 +42,13 @@ namespace BugTracker.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("CompanyId")
+                    b.Property<byte[]>("AvatarFileData")
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("AvatarFileName")
+                        .HasColumnType("text");
+
+                    b.Property<int>("CompanyId")
                         .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -74,9 +95,6 @@ namespace BugTracker.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<int?>("ProjectId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
@@ -97,8 +115,6 @@ namespace BugTracker.Data.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
-
-                    b.HasIndex("ProjectId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -558,15 +574,30 @@ namespace BugTracker.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BugTracker.Models.BTUser", b =>
+            modelBuilder.Entity("BTUserProject", b =>
                 {
-                    b.HasOne("BugTracker.Models.Company", null)
-                        .WithMany("Collaborators")
-                        .HasForeignKey("CompanyId");
+                    b.HasOne("BugTracker.Models.BTUser", null)
+                        .WithMany()
+                        .HasForeignKey("MembersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BugTracker.Models.Project", null)
-                        .WithMany("Members")
-                        .HasForeignKey("ProjectId");
+                        .WithMany()
+                        .HasForeignKey("ProjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BugTracker.Models.BTUser", b =>
+                {
+                    b.HasOne("BugTracker.Models.Company", "Company")
+                        .WithMany("Collaborators")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("BugTracker.Models.Invite", b =>
@@ -782,8 +813,6 @@ namespace BugTracker.Data.Migrations
 
             modelBuilder.Entity("BugTracker.Models.Project", b =>
                 {
-                    b.Navigation("Members");
-
                     b.Navigation("Tickets");
                 });
 
