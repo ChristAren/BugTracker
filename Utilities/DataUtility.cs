@@ -116,9 +116,9 @@ namespace BugTracker.Utilities
                 context.SaveChanges();
 
                 //Get Company Ids
-                company1Id = context.Companies.FirstOrDefault(p => p.Name == "Company1").Id;
-                company2Id = context.Companies.FirstOrDefault(p => p.Name == "Company2").Id;
-                company3Id = context.Companies.FirstOrDefault(p => p.Name == "Company3").Id;
+                company1Id = context.Companies.FirstOrDefault(p => p.Name == "Company 1").Id;
+                company2Id = context.Companies.FirstOrDefault(p => p.Name == "Company 2").Id;
+                company3Id = context.Companies.FirstOrDefault(p => p.Name == "Company 3").Id;
             }
 
             catch (Exception ex)

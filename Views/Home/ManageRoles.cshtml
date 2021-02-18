@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using BugTracker.Services
+@inject UserManager<BTUser> userManager
+@inject IBTRoleService roleService
+
+@{ 
+    var users = new MultiSelectList(userManager.Users, "Id", "FullName");
+    var roles = new SelectList(roleService.NonDemoRoles(), "Name", "Name");
+}
+
+<form asp-action="ManageRoles" method="post">
+    <div class="row">
+        <div class="col">
+            <select name="userIds" multiple="multiple" asp-items="@users"></select>
+        </div>
+        <div class="col">
+            <select class="text-dark" name="roleName" asp-items="@roles"></select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4 offset-4">
+            <button type="submit" class="btn btn-warning btn-lg">Make It So</button>
+        </div>
+    </div>
+</form>

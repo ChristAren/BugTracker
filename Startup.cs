@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BugTracker.Data;
 using BugTracker.Models;
+using BugTracker.Services;
 using BugTracker.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,6 +40,8 @@ namespace BugTracker
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
+
+            services.AddScoped<IBTRoleService, BTRoleService>();
 
             //services.AddControllersWithViews();
             services.AddMvc();
