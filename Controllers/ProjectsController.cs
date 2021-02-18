@@ -48,7 +48,7 @@ namespace BugTracker.Controllers
         // GET: Projects/Create
         public IActionResult Create()
         {
-            ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Id");
+            ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Name");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace BugTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CompanyId,Name,Description,ImageFileName,ImageFileData")] Project project)
+        public async Task<IActionResult> Create([Bind("Id,CompanyId,Name,Description,ImageFileName,ImageFileData, CompanyId")] Project project)
         {
             if (ModelState.IsValid)
             {
