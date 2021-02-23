@@ -7,16 +7,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BugTracker.Data;
 using BugTracker.Models;
+using Microsoft.AspNetCore.Identity;
+using BugTracker.Services;
 
 namespace BugTracker.Controllers
 {
     public class TicketsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<BTUser> _userManager;
+        private readonly IBTHistoryService _historyService;
 
-        public TicketsController(ApplicationDbContext context)
+       public TicketsController(ApplicationDbContext context, UserManager<BTUser> userManager, IBTHistoryService historyService)
         {
             _context = context;
+            _userManager = userManager;
+            _historyService = historyService;
         }
 
         // GET: Tickets
@@ -118,12 +124,41 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
+            //Get Old Ticket
+            Ticket oldTicket = await _context.Tickets
+                               .Include(t => t.TicketType)
+                               .Include(t => t.TicketPriority)
+                               .Include(t => t.TicketStatus)
+                               .Include(t => t.Project)
+                               .Include(t => t.DeveloperUser)
+                               .AsNoTracking().FirstOrDefaultAsync(t => t.Id == id);
+
             if (ModelState.IsValid)
             {
                 try
                 {
                     _context.Update(ticket);
                     await _context.SaveChangesAsync();
+
+                    //Add History
+
+                    //Get User Id
+                    string userId = _userManager.GetUserId(User);
+
+                    //Get New Ticket
+                    Ticket newTicket = await _context.Tickets
+                              .Include(t => t.TicketType)
+                              .Include(t => t.TicketPriority)
+                              .Include(t => t.TicketStatus)
+                              .Include(t => t.Project)
+                              .Include(t => t.DeveloperUser)
+                              .AsNoTracking().FirstOrDefaultAsync(t => t.Id == id);
+
+                    //Call History Service
+                    await _historyService.AddHistoryAsync(oldTicket, newTicket, userId);
+
+                    return RedirectToAction(nameof(Index));
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -138,6 +173,9 @@ namespace BugTracker.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+
+
             ViewData["DeveloperUserId"] = new SelectList(_context.Users, "Id", "Id", ticket.DeveloperUserId);
             ViewData["OwnerUserId"] = new SelectList(_context.Users, "Id", "Id", ticket.OwnerUserId);
             ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name", ticket.ProjectId);
