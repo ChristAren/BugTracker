@@ -36,12 +36,12 @@ namespace BugTracker.Models
         [NotMapped]
         [DataType(DataType.Upload)]
         [MaxFileSize(2 * 1024 * 1024)]
-        [AllowedExtensions(new string[] { ".jpg", ".png" })]
-        public IFormFile ImageFormFile { get; set; }
+        [AllowedExtensions(new string[] { ".jpg", ".png", "doc", "docx", "xls", "xlsx", "pdf" })]
+        public IFormFile FormFile { get; set; }
 
-        public string ImageFileName { get; set; }
+        public string FileName { get; set; }
 
-        public byte[] ImageFileData { get; set; }
+        public byte[] FileData { get; set; }
 
         //Navigation
         public virtual ICollection<BTUser> Members { get; set; }

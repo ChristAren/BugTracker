@@ -102,7 +102,7 @@ namespace BugTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CompanyId,Name,Description,ImageFileName,ImageFileData, CompanyId")] Project project)
+        public async Task<IActionResult> Create([Bind("Id,CompanyId,Name,Description,FileName,FileData, CompanyId")] Project project)
         {
             if (ModelState.IsValid)
             {
@@ -136,7 +136,7 @@ namespace BugTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CompanyId,Name,Description,ImageFileName,ImageFileData")] Project project)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CompanyId,Name,Description,FileName,FileData")] Project project)
         {
             if (id != project.Id)
             {

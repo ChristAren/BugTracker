@@ -5,34 +5,35 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 
 namespace BugTracker.Extensions
+{   
+public class AllowedExtensionsAttribute : ValidationAttribute
 {
-    public class AllowedExtensionsAttribute : ValidationAttribute
+    private readonly string[] _extensions;
+    public AllowedExtensionsAttribute(string[] extensions)
     {
-        private readonly string[] _extensions;
+        _extensions = extensions;
+    }
 
-        public AllowedExtensionsAttribute(string[] extensions)
+    protected override ValidationResult IsValid(
+    object value, ValidationContext validationContext)
+    {
+        var file = value as IFormFile;
+        if (file != null)
         {
-            _extensions = extensions;
-        }
-
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            var file = value as IFormFile;
-            if (file != null)
+            var extension = Path.GetExtension(file.FileName);
+            if (!_extensions.Contains(extension.ToLower()))
             {
-                var extension = Path.GetExtension(file.FileName);
-                if (!_extensions.Contains(extension.ToLower()))
-                {
-                    return new ValidationResult(GetErrorMessage(extension));
-                }
+                return new ValidationResult(GetErrorMessage(extension));
             }
-
-            return ValidationResult.Success;
         }
 
-        public string GetErrorMessage (string ext)
-        {
-            return $"The file extension {ext} is not allowed!";
-        }
+        return ValidationResult.Success;
+    }
+
+    public string GetErrorMessage(string ext)
+    {
+        return $"The file extension {ext} is not allowed!";
     }
 }
+}
+

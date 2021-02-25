@@ -37,6 +37,8 @@ namespace BugTracker
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddScoped<IBTHistoryService, BTHistoryService>();
+
             services.AddIdentity<BTUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
@@ -45,6 +47,7 @@ namespace BugTracker
             services.AddScoped<IBTRoleService, BTRoleService>();
             services.AddScoped<IBTProjectService, BTProjectService>();
             services.AddTransient<IEmailSender, EmailService>();
+            
 
             //services.AddControllersWithViews();
             services.AddMvc();

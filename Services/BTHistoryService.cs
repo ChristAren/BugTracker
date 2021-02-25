@@ -15,7 +15,7 @@ namespace BugTracker.Services
 
         public BTHistoryService(ApplicationDbContext context, IEmailSender emailSender)
         {
-           _context = context;
+            _context = context;
             _emailSender = emailSender;
         }
 
@@ -33,9 +33,9 @@ namespace BugTracker.Services
                     UserId = userId
                 };
                 await _context.TicketHistories.AddAsync(history);
-            }  
-            
-            //------------------------------------------------------
+            }
+
+            //--------------------------------------------------------
 
             if (oldTicket.Description != newTicket.Description)
             {
@@ -49,9 +49,13 @@ namespace BugTracker.Services
                     UserId = userId
                 };
                 await _context.TicketHistories.AddAsync(history);
-            }
+            };
 
-            //------------------------------------------------------
+
+
+            //--------------------------------------------------------
+
+
 
             if (oldTicket.TicketTypeId != newTicket.TicketTypeId)
             {
@@ -65,11 +69,13 @@ namespace BugTracker.Services
                     UserId = userId
                 };
                 await _context.TicketHistories.AddAsync(history);
-            }
+            };
 
-            //------------------------------------------------------
+            //-------------------------------------------------------------
 
-            if (oldTicket.TicketPriority != newTicket.TicketPriority)
+            //TicketPriority
+
+            if (oldTicket.TicketPriorityId != newTicket.TicketPriorityId)
             {
                 TicketHistory history = new TicketHistory
                 {
@@ -81,11 +87,13 @@ namespace BugTracker.Services
                     UserId = userId
                 };
                 await _context.TicketHistories.AddAsync(history);
-            }
+            };
 
-            //------------------------------------------------------
+            //-------------------------------------------------------------
 
-            if (oldTicket.TicketStatus != newTicket.TicketStatus)
+            //TicketStatus
+
+            if (oldTicket.TicketStatusId != newTicket.TicketStatusId)
             {
                 TicketHistory history = new TicketHistory
                 {
@@ -97,40 +105,63 @@ namespace BugTracker.Services
                     UserId = userId
                 };
                 await _context.TicketHistories.AddAsync(history);
-            }
+            };
 
-            //------------------------------------------------------
+            //-------------------------------------------------------------
+
+            //DevelopmentId
 
             if (oldTicket.DeveloperUserId != newTicket.DeveloperUserId)
             {
-                TicketHistory history = new TicketHistory
+                TicketHistory history = new TicketHistory();
+
+                if (oldTicket.DeveloperUserId == null)
                 {
-                    TicketId = newTicket.Id,
-                    Property = "Developer",
-                    OldValue = oldTicket.DeveloperUser.FullName,
-                    NewValue = newTicket.DeveloperUser.FullName,
-                    Created = DateTimeOffset.Now,
-                    UserId = userId
-                };
-                await _context.TicketHistories.AddAsync(history);
+                    history = new TicketHistory
+                    {
+                        TicketId = newTicket.Id,
+                        Property = "Developer",
+                        OldValue = "Unassigned",
+                        NewValue = newTicket.DeveloperUser.FullName,
+                        Created = DateTimeOffset.Now,
+                        UserId = userId
+                    };
+                    await _context.TicketHistories.AddAsync(history);
+                }
+
+                else
+                {
+                    history = new TicketHistory()
+                    {
+                        TicketId = newTicket.Id,
+                        Property = "Developer",
+                        OldValue = oldTicket.DeveloperUser.FullName,
+                        NewValue = newTicket.DeveloperUser.FullName,
+                        Created = DateTimeOffset.Now,
+                        UserId = userId
+                    };
+                    await _context.TicketHistories.AddAsync(history);
+                }
 
                 Notification notification = new Notification
                 {
                     TicketId = newTicket.Id,
-                    Description = "You have a new ticket.",
+                    Description = "You Have a New Ticket",
                     Created = DateTimeOffset.Now,
                     SenderId = userId,
                     RecipientId = newTicket.DeveloperUserId
                 };
                 await _context.Notifications.AddAsync(notification);
 
-                //Send an Email
+                //Send E-mail 
                 string devEmail = newTicket.DeveloperUser.Email;
                 string subject = "New Ticket Assignment";
-                string message = $"You have a new ticket for project: {newTicket.Project.Name}";
+                string message = $"You have a new ticket for a project: {newTicket.Project.Name}";
 
                 await _emailSender.SendEmailAsync(devEmail, subject, message);
-            }
+
+            };
+            _context.SaveChanges();
         }
     }
 }
