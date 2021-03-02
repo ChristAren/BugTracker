@@ -633,7 +633,7 @@ namespace BugTracker.Utilities
                                                     new TicketPriority() { Name = "Low" },
                                                     new TicketPriority() { Name = "Medium" },
                                                     new TicketPriority() { Name = "High" },
-                                                    new TicketPriority() { Name = "Urgent" },
+                                                    new TicketPriority() { Name = "Critical" },
                 };
 
                 var dbTicketPriorities = context.TicketPriorities.Select(c => c.Name).ToList();
@@ -693,7 +693,7 @@ namespace BugTracker.Utilities
             int priorityLow = context.TicketPriorities.FirstOrDefault(p => p.Name == "Low").Id;
             int priorityMedium = context.TicketPriorities.FirstOrDefault(p => p.Name == "Medium").Id;
             int priorityHigh = context.TicketPriorities.FirstOrDefault(p => p.Name == "High").Id;
-            int priorityUrgent = context.TicketPriorities.FirstOrDefault(p => p.Name == "Urgent").Id;
+            int priorityUrgent = context.TicketPriorities.FirstOrDefault(p => p.Name == "Critical").Id;
 
             //Get ticket status Ids
             int statusNew = context.TicketStatus.FirstOrDefault(p => p.Name == "New").Id;

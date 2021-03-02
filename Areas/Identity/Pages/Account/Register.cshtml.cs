@@ -126,6 +126,8 @@ namespace BugTracker.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+            ViewData["CompanyId"] = new SelectList(_context.Companies, "Id", "Name");
+            ReturnUrl = returnUrl;
 
             // If we got this far, something failed, redisplay form
             return Page();
