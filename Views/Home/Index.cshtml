@@ -1,15 +1,17 @@
-﻿                   <!-- Small boxes (Stat box) -->
+﻿ @model BugTracker.Models.ViewModels.DashboardViewModel     
+
+      <!-- Small boxes (Stat box) -->
 <div class="row">
     <div class="col-lg-3 col-6">
         <!-- small box -->
         <div class="small-box bg-danger">
             <div class="inner">
-                <h3>150</h3>
+                <h1>@Model.Tickets.Where(t => t.TicketPriority.Name == "Critical").Count()</h1>
             </div>
             <div class="icon">
                 <i class="fa fa-exclamation"></i>
             </div>
-            <a href="#" class="small-box-footer">Critical Tickets <i class="fas fa-arrow-circle-right"></i></a>
+            <a class="small-box-footer">Critical Tickets</a>
         </div>
     </div>
 
@@ -23,7 +25,7 @@
             <div class="icon">
                 <i class="fa fa-hourglass"></i>
             </div>
-            <a href="#" class="small-box-footer">Oldest Tickets <i class="fas fa-arrow-circle-right"></i></a>
+            <a class="small-box-footer">Oldest Tickets</a>
         </div>
     </div>
 
@@ -32,12 +34,12 @@
         <!-- small box -->
         <div class="small-box bg-info">
             <div class="inner">
-                <h3>53</h3>
+                <h1>@Model.Tickets.Where(t => t.DeveloperUser == null).Count()</h1>
             </div>
             <div class="icon">
                 <i class="fa fa-question"></i>
             </div>
-            <a href="#" class="small-box-footer">Unassigned Tickets <i class="fas fa-arrow-circle-right"></i></a>
+            <a class="small-box-footer">Unassigned Tickets</i></a>
         </div>
     </div>
 
@@ -46,13 +48,13 @@
         <!-- small box -->
         <div class="small-box bg-success ">
             <div class="inner">
-                <h3>65</h3>
+                <h1>@Model.Tickets.Where(t => t.TicketStatus.Name == "Closed").Count()</h1>
 
             </div>
             <div class="icon">
                 <i class="fa fa-check"></i>
             </div>
-            <a href="#" class="small-box-footer">Resolved Tickets <i class="fas fa-arrow-circle-right"></i></a>
+            <a class="small-box-footer">Resolved Tickets</a>
         </div>
     </div>
     <!-- ./col -->
@@ -64,7 +66,6 @@
 <canvas id="myChart" width="100" height="100"></canvas>
               </div>
       </div>
-<canvas id="myChart2" width="400" height="400"></canvas>
 
 @if (User.IsInRole("Admin"))
 {
@@ -149,7 +150,7 @@
                                         In Progress
                                     </td>
                                     <td>
-                                        <a class="btn btn-info" href="/Tickets/Details/106">Details <i class="fa fa-arrow-circle-right"></i></a>
+                                        <a class="btn btn-info" asp-controller="Tickets" asp-action="Index" asp-route-filter="Critical">Details <i class="fa fa-arrow-circle-right"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -243,7 +244,7 @@
                                         In Progress
                                     </td>
                                     <td>
-                                        <a class="btn btn-info" href="/Tickets/Details/106">Details <i class="fa fa-arrow-circle-right"></i></a>
+                                        <a class="btn btn-info" asp-controller="Tickets" asp-action="Index" asp-route-filter="Oldest">Details <i class="fa fa-arrow-circle-right"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -337,7 +338,7 @@
                                         In Progress
                                     </td>
                                     <td>
-                                        <a class="btn btn-info" href="/Tickets/Details/106">Details <i class="fa fa-arrow-circle-right"></i></a>
+                                        <a class="btn btn-info" asp-controller="Tickets" asp-action="Index" asp-route-filter="All">Details <i class="fa fa-arrow-circle-right"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -431,7 +432,7 @@
                                         In Progress
                                     </td>
                                     <td>
-                                        <a class="btn btn-success" href="/Tickets/Details/106">Details <i class="fa fa-arrow-circle-right"></i></a>
+                                        <a class="btn btn-success" asp-controller="Tickets" asp-action="Index" asp-route-filter="Resolved">Details <i class="fa fa-arrow-circle-right"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -478,43 +479,6 @@ else
             });
         })
 
-        var ctx = document.getElementById('myChart2').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
     </script>
 }
 

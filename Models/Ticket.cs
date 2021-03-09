@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace BugTracker.Models
 {
     public class Ticket
-    {
+    {         
+        //Overloaded Constructor (ctor)
         public Ticket()
         {
             Comments = new HashSet<TicketComment>();
@@ -46,7 +47,7 @@ namespace BugTracker.Models
         public DateTimeOffset Created { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTimeOffset Updated { get; set; }
+        public DateTimeOffset? Updated { get; set; }
 
         //Navigation
 

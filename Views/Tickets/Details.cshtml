@@ -77,7 +77,6 @@
     </dl>
 
     @*Ticket Comments*@
-    <h4>Comments</h4>
 
     @if (User.Identity.IsAuthenticated)
     {
@@ -151,8 +150,6 @@
     </div>
 
     @*Ticket Attachments*@
-    <h4>Attachments</h4>
-
     <div class="row clearfix">
         @foreach (TicketAttachment item in Model.Attachments)
         {
@@ -161,9 +158,9 @@
                     <div class="file">
                         <a href="javascript:void(0);">
                             <div class="hover">
-                                <button type="button" class="btn btn-icon btn-danger">
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                                <a asp-action="Delete" asp-controller="TicketAttachments" asp-route-id="@item.Id" type="button" class="btn btn-icon btn-danger">
+                                    <i type="submit" value="Delete" class="fa fa-trash"></i>
+                                </a>
                             </div>
                             <div class="icon">
                                 <img src="@FileService.GetFileIcon(item.FileName)" style="height:60px;width:60px" />
@@ -193,6 +190,7 @@
                 <label class="btn btn-outline-primary btn-sm">
                     <input asp-for="@Model.Attachments.FirstOrDefault().FormFile" type="file" />
                 </label>
+                <span asp-validation-for="@Model.Attachments.FirstOrDefault().FormFile" class="text-danger"></span>
                 <button type="submit" class="btn btn-outline-secondary btn-sm md-btn-flat">Submit</button>
             </div>
         </form>
@@ -203,22 +201,19 @@
             <thead>
                 <tr>
                     <th>
-                        File Name
+
                     </th>
                     <th>
-                        File Data
+                        @*Description*@
                     </th>
                     <th>
-                        Description
+                        @*Created*@
                     </th>
                     <th>
-                        Created
+                        @*Ticket*@
                     </th>
                     <th>
-                        Ticket
-                    </th>
-                    <th>
-                        User
+                        @*User*@
                     </th>
                     <th></th>
                 </tr>
@@ -300,7 +295,7 @@
                             @Html.DisplayFor(modelItem => item.Ticket.Description)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.User.Id)
+                            @Html.DisplayFor(modelItem => item.User.FullName)
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

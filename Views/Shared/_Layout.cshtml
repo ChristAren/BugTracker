@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using BugTracker.Services
 @inject SignInManager<BTUser> SignInManager
 @inject UserManager<BTUser> UserManager
+@inject IBTNotificationService notificationService
 
 <!DOCTYPE html>
 
@@ -10,7 +12,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BugTracker</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -48,62 +49,89 @@
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 </li>
                 <li class="nav-item  d-none d-sm-inline-block">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ManageRoles">Manage Roles</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ManageRoles">Github</a>
                 </li>
                 <li class="nav-item  d-none d-sm-inline-block">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="ManageUsersOnProject">Manage Project User</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="ManageUsersOnProject">Portfolio</a>
                 </li>
                 <partial name="_LoginPartial" />
 
+                @*<li class="nav-item dropdown">
+                        <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-bell"></i>
+                            <span class="notification">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    @((await notificationService.GetUnreadNotificationsAsync(User)).Count())
+                                }
+                            </span>
+                            <p class="d-lg-none d-md-block">
+                                New Notifications
+                            </p>
+                        </a>
+                        @foreach (var notification in (await notificationService.GetUnreadNotificationsAsync(User)))
+                        {
+                            <div class="dropdown-menu float-right" aria-labelledby="navbarDropdownMenuLink">
+
+                                <a class="dropdown-item" asp-controller="Tickets" asp-action="GoToTicket" asp-route-id="@notification.Id">
+
+                                    <p> @notification.Description</p>
+                                    <p> @notification.Sender.FullName</p>
+                                    <span class="float-right text-muted text-sm">@notification.Created.ToString("MM/dd HH:mm")</span>
+
+                                </a>
+                            </div>
+                        }
+                    </li>*@
             </ul>
 
-            <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
-                <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-navbar" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
+            <ul class="navbar-nav ml-auto">
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        @if ((await notificationService.GetUnreadNotificationsAsync(User)).Count() > 0)
+                        {
+                            <span id="navbarNotification" class=""><i class="far fa-bell"></i> @((await notificationService.GetUnreadNotificationsAsync(User)).Count()) Notifications <i id="dropdownIcon" class="fa fa-arrow-alt-circle-down"></i></span>}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header">
+                            @((await notificationService.GetUnreadNotificationsAsync(User)).Count()) Notifications
+                            <a href="javascript:submitMarkAllAsRead()" class="badge-btn">Mark All As Read</a>
+                        </span>
+                        <form asp-controller="Tickets" asp-action="MarkAllAsRead" id="markAllAsReadForm"></form>
+                        @foreach (var item in (await notificationService.GetUnreadNotificationsAsync(User)))
+                        {
+                            <section id="notification-@item.Id">
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void()" class="dropdown-item">
+                                    <p class="text-sm wordWrap">@item.Description</p>
+                                    <p class="text-sm text-muted">From: @item.Sender.FullName</p>
+                                    <p class="text-sm text-muted">On: @item.Created.ToString("MM/dd HH:mm")</p>
+                                </a>
+                                <form asp-controller="Tickets" asp-action="MarkAsRead" asp-route-id="@item.Id" id="markAsRead-@item.Id"></form>
+                                <p class="text-center btn-group-sm bottomSpace">
+                                    <a asp-controller="Tickets" asp-action="GoToTicket" asp-route-id="@item.Id" class="btn btn-success">Go To Ticket</a>
+                                    <a href="javascript:submitMarkAsRead(@item.Id)" class="btn btn-outline-danger">Mark As Read</a>
+                                </p>
+                            </section>}
                     </div>
-                </div>
-            </form>
+                </li>
+            </ul>
+
         </nav>
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
-                <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
-            </a>
 
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                <div class="row text-lg mt-3">
+                    <div class="col text-center">
+                        <p class="d-block text-white text-center">@((await UserManager.GetUserAsync(User)).FullName)</p>
                     </div>
                 </div>
 
-                <!-- SidebarSearch Form -->
-                <div class="form-inline">
-                    <div class="input-group" data-widget="sidebar-search">
-                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-sidebar">
-                                <i class="fas fa-search fa-fw"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
@@ -111,7 +139,7 @@
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
+                            <a asp-controller="Home" asp-action="Index" class="nav-link">
                                 <i class="nav-icon fas fa-home"></i>
                                 <p>
                                     Home
@@ -128,15 +156,21 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="./index.html" class="nav-link">
+                                    <a asp-controller="Projects" asp-action="ManageUsersOnProject" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Manage Users</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./index.html" class="nav-link">
+                                    <a asp-controller="Projects" asp-action="Create" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Create Projects</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-controller="Home" asp-action="ManageRoles" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Manage Roles</p>
                                     </a>
                                 </li>
                             </ul>
@@ -151,37 +185,37 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a asp-controller="Tickets" asp-action="Index" class="nav-link">
+                                    <a asp-controller="Tickets" asp-action="Index" asp-route-filter="All" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>All Tickets</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./index3.html" class="nav-link">
+                                    <a asp-controller="Tickets" asp-action="Index" asp-route-filter="Critical" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Critical Tickets</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./index2.html" class="nav-link">
+                                    <a asp-controller="Tickets" asp-action="Index" asp-route-filter="Unassigned" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Unassigned Tickets</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./index3.html" class="nav-link">
+                                    <a asp-controller="Tickets" asp-action="Index" asp-route-filter="Oldest" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Oldest Tickets</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./index3.html" class="nav-link">
+                                    <a asp-controller="Tickets" asp-action="Index" asp-route-filter="Newest" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Newest Tickets</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./index3.html" class="nav-link">
+                                    <a asp-controller="Tickets" asp-action="Index" asp-route-filter="Resolved" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Resolved Tickets</p>
                                     </a>
@@ -263,15 +297,9 @@
     <script src="~/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="~/js/adminlte.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="~/js/demo.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="~/js/dashboard.js"></script>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
-    @await RenderSectionAsync("Content", required: false) 
+    @await RenderSectionAsync("Content", required: false)
 </body>
 </html>

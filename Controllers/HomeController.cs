@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using BugTracker.Data;
 using BugTracker.Models;
+using BugTracker.Models.ViewModels;
 using BugTracker.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace BugTracker.Controllers
@@ -30,7 +32,23 @@ namespace BugTracker.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            DashboardViewModel model = new DashboardViewModel();
+
+            var tickets = _context.Tickets
+                .Include(t => t.TicketStatus)
+                .Include(t => t.TicketPriority)
+                .Include(t => t.DeveloperUser)
+                .ToList();
+
+            var projects = _context.Projects
+                .Include(p => p.Company)
+                .Include(p => p.Members)
+                .ToList();
+
+            model.Tickets = tickets;
+            model.Projects = projects;
+
+            return View(model);
         }
 
         public IActionResult Privacy()

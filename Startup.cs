@@ -51,6 +51,7 @@ namespace BugTracker
 
             services.AddScoped<IBTHistoryService, BTHistoryService>();
             services.AddScoped<IBTFileService, BTFileService>();
+            services.AddScoped<IBTNotificationService, BTNotificationService>();
 
 
             //services.AddControllersWithViews();
