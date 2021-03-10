@@ -52,37 +52,41 @@
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ManageRoles">Github</a>
                 </li>
                 <li class="nav-item  d-none d-sm-inline-block">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Invites" asp-action="Index">Invites</a>
+                </li>
+
+                <li class="nav-item  d-none d-sm-inline-block">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="ManageUsersOnProject">Portfolio</a>
                 </li>
                 <partial name="_LoginPartial" />
 
                 @*<li class="nav-item dropdown">
-                        <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-bell"></i>
-                            <span class="notification">
-                                @if (User.Identity.IsAuthenticated)
-                                {
-                                    @((await notificationService.GetUnreadNotificationsAsync(User)).Count())
-                                }
-                            </span>
-                            <p class="d-lg-none d-md-block">
-                                New Notifications
-                            </p>
-                        </a>
-                        @foreach (var notification in (await notificationService.GetUnreadNotificationsAsync(User)))
-                        {
-                            <div class="dropdown-menu float-right" aria-labelledby="navbarDropdownMenuLink">
+            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-bell"></i>
+                <span class="notification">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @((await notificationService.GetUnreadNotificationsAsync(User)).Count())
+                    }
+                </span>
+                <p class="d-lg-none d-md-block">
+                    New Notifications
+                </p>
+            </a>
+            @foreach (var notification in (await notificationService.GetUnreadNotificationsAsync(User)))
+            {
+                <div class="dropdown-menu float-right" aria-labelledby="navbarDropdownMenuLink">
 
-                                <a class="dropdown-item" asp-controller="Tickets" asp-action="GoToTicket" asp-route-id="@notification.Id">
+                    <a class="dropdown-item" asp-controller="Tickets" asp-action="GoToTicket" asp-route-id="@notification.Id">
 
-                                    <p> @notification.Description</p>
-                                    <p> @notification.Sender.FullName</p>
-                                    <span class="float-right text-muted text-sm">@notification.Created.ToString("MM/dd HH:mm")</span>
+                        <p> @notification.Description</p>
+                        <p> @notification.Sender.FullName</p>
+                        <span class="float-right text-muted text-sm">@notification.Created.ToString("MM/dd HH:mm")</span>
 
-                                </a>
-                            </div>
-                        }
-                    </li>*@
+                    </a>
+                </div>
+            }
+        </li>*@
             </ul>
 
             <ul class="navbar-nav ml-auto">

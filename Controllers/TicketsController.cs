@@ -17,14 +17,36 @@ namespace BugTracker.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<BTUser> _userManager;
         private readonly IBTHistoryService _historyService;
+        private readonly SignInManager<BTUser> _signInManager;
 
         //overloaded ctor
-        public TicketsController(ApplicationDbContext context, UserManager<BTUser> userManager, IBTHistoryService historyService)
+        public TicketsController(ApplicationDbContext context, UserManager<BTUser> userManager, IBTHistoryService historyService, SignInManager<BTUser> signInManager)
         {
             _context = context;
             _userManager = userManager;
             _historyService = historyService;
+            _signInManager = signInManager;
         }
+
+        public async Task<IActionResult> AcceptInvite(string userId, string code)
+        {
+            var realGuid = Guid.Parse(code);
+            var invite = _context.Invites.FirstOrDefault(i => i.CompanyToken == realGuid && i.InviteeId == userId);
+            if (invite is null)
+            {
+                return NotFound();
+            }
+            if(invite.IsValid)
+            {
+                invite.IsValid = false;
+                var user = await _context.Users.FindAsync(userId);
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Create");
+            }
+            return NotFound();
+        }
+
 
         // GET: Tickets
         public async Task<IActionResult> Index(string filter)
@@ -35,6 +57,9 @@ namespace BugTracker.Controllers
             {
                 case "Unassigned":
                     var model = applicationDbContext.Where(t => t.DeveloperUser == null);
+                    return View(await model.ToListAsync());
+                case "Critical":
+                    model = applicationDbContext.Where(t => t.TicketPriority.Name == "Critical");
                     return View(await model.ToListAsync());
                 case "Oldest":
                     model = applicationDbContext.Where(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null);

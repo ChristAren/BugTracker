@@ -20,7 +20,7 @@
         <!-- small box -->
         <div class="small-box bg-warning">
             <div class="inner">
-                <h3>44</h3>
+                <h1>@Model.Tickets.Where(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null).Count()</h1>
             </div>
             <div class="icon">
                 <i class="fa fa-hourglass"></i>
@@ -123,31 +123,31 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        Lucy Testero
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).OwnerUser.FullName)
                                     </td>
                                     <td>
-                                        Mariana Testero
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).DeveloperUser.FullName)
                                     </td>
                                     <td>
-                                        Need more blog posts
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).Title)
                                     </td>
                                     <td>
-                                        Feb/19/2021 16:33:57
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).Created.ToString("MMM/dd yyyy"))
                                     </td>
                                     <td>
-                                        Feb/25/2021 10:33:57
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).Updated)
                                     </td>
                                     <td>
-                                        Blog Project
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).Project.Name)
                                     </td>
                                     <td>
-                                        User Experience
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).TicketType.Name)
                                     </td>
                                     <td>
-                                        Critical
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).TicketPriority.Name)
                                     </td>
                                     <td>
-                                        In Progress
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).TicketStatus.Name)
                                     </td>
                                     <td>
                                         <a class="btn btn-info" asp-controller="Tickets" asp-action="Index" asp-route-filter="Critical">Details <i class="fa fa-arrow-circle-right"></i></a>
@@ -197,9 +197,6 @@
                                         Created
                                     </th>
                                     <th>
-                                        Updated
-                                    </th>
-                                    <th>
                                         Project
                                     </th>
                                     <th>
@@ -217,31 +214,28 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        Lucy Testero
+                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).OwnerUser.FullName)
                                     </td>
                                     <td>
-                                        Mariana Testero
+                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).DeveloperUser.FullName)
                                     </td>
                                     <td>
-                                        Need more blog posts
+                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).Title)
                                     </td>
                                     <td>
-                                        Feb/19/2021 16:33:57
+                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).Created.ToString("MMM/dd yyyy"))
                                     </td>
                                     <td>
-                                        Feb/25/2021 10:33:57
+                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).Project.Name)
                                     </td>
                                     <td>
-                                        Blog Project
+                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).TicketType.Name)
                                     </td>
                                     <td>
-                                        User Experience
+                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).TicketPriority.Name)
                                     </td>
                                     <td>
-                                        Critical
-                                    </td>
-                                    <td>
-                                        In Progress
+                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).TicketStatus.Name)
                                     </td>
                                     <td>
                                         <a class="btn btn-info" asp-controller="Tickets" asp-action="Index" asp-route-filter="Oldest">Details <i class="fa fa-arrow-circle-right"></i></a>
@@ -311,31 +305,31 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        Lucy Testero
+                                        @(Model.Tickets.First().OwnerUser.FullName)
                                     </td>
                                     <td>
-                                        Mariana Testero
+                                        @(Model.Tickets.First().DeveloperUser.FullName)
                                     </td>
                                     <td>
-                                        Need more blog posts
+                                        @(Model.Tickets.First().Title)
                                     </td>
                                     <td>
-                                        Feb/19/2021 16:33:57
+                                        @(Model.Tickets.First().Created.ToString("MMM/dd yyyy"))
                                     </td>
                                     <td>
-                                        Feb/25/2021 10:33:57
+                                        @(Model.Tickets.First().Updated)
                                     </td>
                                     <td>
-                                        Blog Project
+                                        @(Model.Tickets.First().Project.Name)
                                     </td>
                                     <td>
-                                        User Experience
+                                        @(Model.Tickets.First().TicketType.Name)
                                     </td>
                                     <td>
-                                        Critical
+                                        @(Model.Tickets.First().TicketPriority.Name)
                                     </td>
                                     <td>
-                                        In Progress
+                                        @(Model.Tickets.First().TicketStatus.Name)
                                     </td>
                                     <td>
                                         <a class="btn btn-info" asp-controller="Tickets" asp-action="Index" asp-route-filter="All">Details <i class="fa fa-arrow-circle-right"></i></a>
@@ -405,31 +399,31 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        Lucy Testero
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).OwnerUser.FullName)
                                     </td>
                                     <td>
-                                        Mariana Testero
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).DeveloperUser.FullName)
                                     </td>
                                     <td>
-                                        Need more blog posts
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Title)
                                     </td>
                                     <td>
-                                        Feb/19/2021 16:33:57
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Created.ToString("MMM/dd yyyy"))
                                     </td>
                                     <td>
-                                        Feb/25/2021 10:33:57
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Updated)
                                     </td>
                                     <td>
-                                        Blog Project
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Project.Name)
                                     </td>
                                     <td>
-                                        User Experience
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).TicketType.Name)
                                     </td>
                                     <td>
-                                        Critical
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).TicketPriority.Name)
                                     </td>
                                     <td>
-                                        In Progress
+                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).TicketStatus.Name)
                                     </td>
                                     <td>
                                         <a class="btn btn-success" asp-controller="Tickets" asp-action="Index" asp-route-filter="Resolved">Details <i class="fa fa-arrow-circle-right"></i></a>

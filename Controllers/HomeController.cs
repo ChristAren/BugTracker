@@ -35,9 +35,12 @@ namespace BugTracker.Controllers
             DashboardViewModel model = new DashboardViewModel();
 
             var tickets = _context.Tickets
+                 .Include(t => t.Project)
                 .Include(t => t.TicketStatus)
+                .Include(t => t.TicketType)
                 .Include(t => t.TicketPriority)
                 .Include(t => t.DeveloperUser)
+                .Include(t => t.OwnerUser)
                 .ToList();
 
             var projects = _context.Projects
