@@ -115,7 +115,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var ticket in Model.Tickets.Where(t => t.TicketPriority.Name == "Critical").ToList())
+                                @foreach(var ticket in Model.Tickets.Where(t => t.TicketPriority.Name == "Critical"))
                                 {
                                     <tr>
                                         <td>
@@ -221,28 +221,20 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).OwnerUser.FullName)
                                     </td>
                                     <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).DeveloperUser.FullName)
                                     </td>
                                     <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).Title)
                                     </td>
                                     <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).Created.ToString("MMM/dd yyyy"))
                                     </td>
                                     <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).Project.Name)
                                     </td>
                                     <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).TicketType.Name)
                                     </td>
                                     <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).TicketPriority.Name)
                                     </td>
                                     <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).TicketStatus.Name)
                                     </td>
                                     <td>
                                         <a class="btn" asp-controller="Tickets" asp-action="Index" asp-route-filter="Oldest">Details <i class="fa fa-arrow-circle-right"></i></a>
@@ -312,31 +304,22 @@
                 <tbody>
                     <tr>
                         <td>
-                            @(Model.Tickets.First().OwnerUser.FullName)
                         </td>
                         <td>
-                            @(Model.Tickets.First().DeveloperUser.FullName)
                         </td>
                         <td>
-                            @(Model.Tickets.First().Title)
                         </td>
                         <td>
-                            @(Model.Tickets.First().Created.ToString("MMM/dd yyyy"))
                         </td>
                         <td>
-                            @(Model.Tickets.First().Updated)
                         </td>
                         <td>
-                            @(Model.Tickets.First().Project.Name)
                         </td>
                         <td>
-                            @(Model.Tickets.First().TicketType.Name)
                         </td>
                         <td>
-                            @(Model.Tickets.First().TicketPriority.Name)
                         </td>
                         <td>
-                            @(Model.Tickets.First().TicketStatus.Name)
                         </td>
                         <td>
                             <a class="btn" asp-controller="Tickets" asp-action="Index" asp-route-filter="All">Details <i class="fa fa-arrow-circle-right"></i></a>
@@ -406,31 +389,22 @@
                 <tbody>
                     <tr>
                         <td>
-                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).OwnerUser.FullName)
                         </td>
                         <td>
-                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).DeveloperUser.FullName)
                         </td>
                         <td>
-                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Title)
                         </td>
                         <td>
-                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Created.ToString("MMM/dd yyyy"))
                         </td>
                         <td>
-                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Updated)
                         </td>
                         <td>
-                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Project.Name)
                         </td>
                         <td>
-                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).TicketType.Name)
                         </td>
                         <td>
-                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).TicketPriority.Name)
                         </td>
                         <td>
-                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).TicketStatus.Name)
                         </td>
                         <td>
                             <a class="btn" asp-controller="Tickets" asp-action="Index" asp-route-filter="Resolved">Details <i class="fa fa-arrow-circle-right"></i></a>
