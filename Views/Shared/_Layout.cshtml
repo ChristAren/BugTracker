@@ -33,6 +33,9 @@
     <link rel="stylesheet" href="~/css/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="~/css/summernote-bs4.min.css">
+    <link rel="stylesheet" href="~/css/plugins/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/css/plugins/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/css/plugins/buttons.bootstrap4.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -61,32 +64,32 @@
                 <partial name="_LoginPartial" />
 
                 @*<li class="nav-item dropdown">
-            <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-bell"></i>
-                <span class="notification">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        @((await notificationService.GetUnreadNotificationsAsync(User)).Count())
-                    }
-                </span>
-                <p class="d-lg-none d-md-block">
-                    New Notifications
-                </p>
-            </a>
-            @foreach (var notification in (await notificationService.GetUnreadNotificationsAsync(User)))
-            {
-                <div class="dropdown-menu float-right" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="nav-link" href="javscript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-bell"></i>
+                            <span class="notification">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    @((await notificationService.GetUnreadNotificationsAsync(User)).Count())
+                                }
+                            </span>
+                            <p class="d-lg-none d-md-block">
+                                New Notifications
+                            </p>
+                        </a>
+                        @foreach (var notification in (await notificationService.GetUnreadNotificationsAsync(User)))
+                        {
+                            <div class="dropdown-menu float-right" aria-labelledby="navbarDropdownMenuLink">
 
-                    <a class="dropdown-item" asp-controller="Tickets" asp-action="GoToTicket" asp-route-id="@notification.Id">
+                                <a class="dropdown-item" asp-controller="Tickets" asp-action="GoToTicket" asp-route-id="@notification.Id">
 
-                        <p> @notification.Description</p>
-                        <p> @notification.Sender.FullName</p>
-                        <span class="float-right text-muted text-sm">@notification.Created.ToString("MM/dd HH:mm")</span>
+                                    <p> @notification.Description</p>
+                                    <p> @notification.Sender.FullName</p>
+                                    <span class="float-right text-muted text-sm">@notification.Created.ToString("MM/dd HH:mm")</span>
 
-                    </a>
-                </div>
-            }
-        </li>*@
+                                </a>
+                            </div>
+                        }
+                    </li>*@
             </ul>
 
             <ul class="navbar-nav ml-auto">
@@ -274,7 +277,7 @@
     <!-- jQuery -->
     <script src="~/js/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
-    <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/js/plugins/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
@@ -301,6 +304,28 @@
     <script src="~/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="~/js/adminlte.js"></script>
+    <script src="~/js/plugins/jquery.dataTables.min.js"></script>
+    <script src="~/js/plugins/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/plugins/dataTables.responsive.min.js"></script>
+    <script src="~/js/plugins/responsive.bootstrap4.min.js"></script>
+    <script src="~/js/plugins/dataTables.buttons.min.js"></script>
+    <script src="~/js/plugins/buttons.bootstrap4.min.js"></script>
+    <script src="~/js/plugins/jszip.min.js"></script>
+    <script src="~/js/plugins/pdfmake.min.js"></script>
+    <script src="~/js/plugins/vfs_fonts.js"></script>
+    <script src="~/js/plugins/buttons.html5.min.js"></script>
+    <script src="~/js/plugins/buttons.print.min.js"></script>
+    <script src="~/js/plugins/buttons.colVis.min.js"></script>
+
+    @*<script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    </script>*@
+
+
 
 
     @await RenderSectionAsync("Scripts", required: false)

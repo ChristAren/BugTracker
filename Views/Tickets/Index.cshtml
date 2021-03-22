@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<BugTracker.Models.Ticket>
 
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -8,7 +9,8 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+
+<table id="example1" class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>
@@ -45,44 +47,59 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Updated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Project.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TicketType.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TicketPriority.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TicketStatus.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OwnerUser.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeveloperUser.FullName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Updated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Project.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketPriority.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TicketStatus.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OwnerUser.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeveloperUser.FullName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@section scripts
+{
+
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": false, "lengthChange": false, "autoWidth": false,
+                "buttons": ["colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)')
+        });
+    </script>
+}
+

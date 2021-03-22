@@ -51,7 +51,13 @@ namespace BugTracker.Controllers
         // GET: Tickets
         public async Task<IActionResult> Index(string filter)
         {
-            var applicationDbContext = _context.Tickets.Include(t => t.DeveloperUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketPriority).Include(t => t.TicketStatus).Include(t => t.TicketType);
+            var applicationDbContext = _context.Tickets
+                .Include(t => t.DeveloperUser)
+                .Include(t => t.OwnerUser)
+                .Include(t => t.Project)
+                .Include(t => t.TicketPriority)
+                .Include(t => t.TicketStatus)
+                .Include(t => t.TicketType);
 
             switch (filter)
             {
@@ -173,6 +179,7 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
 
+            //study/explain this line of code
             var ticket = await _context.Tickets.FindAsync(id);
             if (ticket == null)
             {

@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-danger">
+        <div class="small-box">
             <div class="inner">
                 <h1>@Model.Tickets.Where(t => t.TicketPriority.Name == "Critical").Count()</h1>
             </div>
@@ -18,7 +18,7 @@
     <!-- ./col -->
     <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-warning">
+        <div class="small-box">
             <div class="inner">
                 <h1>@Model.Tickets.Where(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null).Count()</h1>
             </div>
@@ -32,21 +32,21 @@
     <!-- ./col -->
     <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-info">
+        <div class="small-box">
             <div class="inner">
                 <h1>@Model.Tickets.Where(t => t.DeveloperUser == null).Count()</h1>
             </div>
             <div class="icon">
                 <i class="fa fa-question"></i>
             </div>
-            <a class="small-box-footer">Unassigned Tickets</i></a>
+            <a class="small-box-footer">Unassigned Tickets</a>
         </div>
     </div>
 
     <!-- ./col -->
     <div class="col-lg-3 col-6">
         <!-- small box -->
-        <div class="small-box bg-success ">
+        <div class="small-box">
             <div class="inner">
                 <h1>@Model.Tickets.Where(t => t.TicketStatus.Name == "Closed").Count()</h1>
 
@@ -61,18 +61,13 @@
 </div>
 <!-- /.row -->
 <!-- Main row -->
-     <div class="row">
-          <div class="col-2 offset-5">
-<canvas id="myChart" width="100" height="100"></canvas>
-              </div>
-      </div>
 
 @if (User.IsInRole("Admin"))
 {
     <div class="row">
         <div class="col">
             <div class="card">
-                <div class="card-header bg-danger">
+                <div class="card-header">
                     <h5 class="card-title">Critical Tickets</h5>
 
                     <div class="card-tools">
@@ -86,8 +81,8 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <div class="row" id="myTkts">
-                        <table class="table">
+                    <div class="row">
+                        <table class="table table-striped" id="example1">
                             <thead>
                                 <tr>
                                     <th>
@@ -150,7 +145,7 @@
                                         @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).TicketStatus.Name)
                                     </td>
                                     <td>
-                                        <a class="btn btn-info" asp-controller="Tickets" asp-action="Index" asp-route-filter="Critical">Details <i class="fa fa-arrow-circle-right"></i></a>
+                                        <a class="btn" asp-controller="Tickets" asp-action="Index" asp-route-filter="Critical">Details <i class="fa fa-arrow-circle-right"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -166,7 +161,7 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <div class="card-header bg-warning">
+                <div class="card-header">
                     <h5 class="card-title">Oldest Tickets</h5>
 
                     <div class="card-tools">
@@ -180,8 +175,8 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <div class="row" id="myTkts">
-                        <table class="table">
+                    <div class="row">
+                        <table class="table table-striped" id="example2">
                             <thead>
                                 <tr>
                                     <th>
@@ -238,7 +233,7 @@
                                         @((Model.Tickets.FirstOrDefault(t => t.Created < DateTime.Now.AddDays(-0) && t.Updated == null)).TicketStatus.Name)
                                     </td>
                                     <td>
-                                        <a class="btn btn-info" asp-controller="Tickets" asp-action="Index" asp-route-filter="Oldest">Details <i class="fa fa-arrow-circle-right"></i></a>
+                                        <a class="btn" asp-controller="Tickets" asp-action="Index" asp-route-filter="Oldest">Details <i class="fa fa-arrow-circle-right"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -254,7 +249,7 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <div class="card-header bg-purple">
+                <div class="card-header">
                     <h5 class="card-title">All Tickets</h5>
 
                     <div class="card-tools">
@@ -268,8 +263,8 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <div class="row" id="myTkts">
-                        <table class="table">
+                    <div class="row">
+                        <table class="table table-striped" id="example3">
                             <thead>
                                 <tr>
                                     <th>
@@ -332,7 +327,7 @@
                                         @(Model.Tickets.First().TicketStatus.Name)
                                     </td>
                                     <td>
-                                        <a class="btn btn-info" asp-controller="Tickets" asp-action="Index" asp-route-filter="All">Details <i class="fa fa-arrow-circle-right"></i></a>
+                                        <a class="btn" asp-controller="Tickets" asp-action="Index" asp-route-filter="All">Details <i class="fa fa-arrow-circle-right"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -348,7 +343,7 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <div class="card-header bg-success">
+                <div class="card-header">
                     <h5 class="card-title">Resolved Tickets</h5>
 
                     <div class="card-tools">
@@ -362,8 +357,8 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <div class="row" id="myTkts">
-                        <table class="table">
+                    <div class="row">
+                        <table class="table table-striped" id="example4">
                             <thead>
                                 <tr>
                                     <th>
@@ -426,7 +421,7 @@
                                         @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).TicketStatus.Name)
                                     </td>
                                     <td>
-                                        <a class="btn btn-success" asp-controller="Tickets" asp-action="Index" asp-route-filter="Resolved">Details <i class="fa fa-arrow-circle-right"></i></a>
+                                        <a class="btn" asp-controller="Tickets" asp-action="Index" asp-route-filter="Resolved">Details <i class="fa fa-arrow-circle-right"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -473,6 +468,32 @@ else
             });
         })
 
+    </script>
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)')
+        });
+        $(function () {
+            $("#example2").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["colvis"]
+            }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)')
+        });
+        $(function () {
+            $("#example3").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["colvis"]
+            }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)')
+        });
+        $(function () {
+            $("#example4").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["colvis"]
+            }).buttons().container().appendTo('#example4_wrapper .col-md-6:eq(0)')
+        });
     </script>
 }
 
