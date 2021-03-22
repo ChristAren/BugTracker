@@ -1,6 +1,5 @@
-﻿ @model BugTracker.Models.ViewModels.DashboardViewModel     
-
-      <!-- Small boxes (Stat box) -->
+﻿@model BugTracker.Models.ViewModels.DashboardViewModel
+<!-- Small boxes (Stat box) -->
 <div class="row">
     <div class="col-lg-3 col-6">
         <!-- small box -->
@@ -120,10 +119,13 @@
                                 {
                                     <tr>
                                         <td>
-                                            @ticket.OwnerUser.FullName
+                                            @if (ticket.OwnerUser is not null)
+                                            {
+                                                @ticket.OwnerUser.FullName
+                                            }
                                         </td>
                                         <td>
-                                           @if(ticket.DeveloperUser is not null)
+                                            @if (ticket.DeveloperUser is not null)
                                             {
                                                 @ticket.DeveloperUser.FullName
                                             }
@@ -249,7 +251,7 @@
                             </tbody>
                         </table>
                     </div>-->
-                    <!-- /.row -->
+                <!-- /.row -->
                 <!--</div>-->
                 <!-- ./card-body -->
             </div>
@@ -271,82 +273,82 @@
                         </button>
                     </div>
                 </div>-->
-                <!-- /.card-header -->
-                <!--<div class="card-body">
-                    <div class="row">
-                        <table class="table table-striped" id="example3">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Created By
-                                    </th>
-                                    <th>
-                                        Developer
-                                    </th>
-                                    <th>
-                                        Title
-                                    </th>
-                                    <th>
-                                        Created
-                                    </th>
-                                    <th>
-                                        Updated
-                                    </th>
-                                    <th>
-                                        Project
-                                    </th>
-                                    <th>
-                                        Type
-                                    </th>
-                                    <th>
-                                        Priority
-                                    </th>
-                                    <th>
-                                        Status
-                                    </th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        @(Model.Tickets.First().OwnerUser.FullName)
-                                    </td>
-                                    <td>
-                                        @(Model.Tickets.First().DeveloperUser.FullName)
-                                    </td>
-                                    <td>
-                                        @(Model.Tickets.First().Title)
-                                    </td>
-                                    <td>
-                                        @(Model.Tickets.First().Created.ToString("MMM/dd yyyy"))
-                                    </td>
-                                    <td>
-                                        @(Model.Tickets.First().Updated)
-                                    </td>
-                                    <td>
-                                        @(Model.Tickets.First().Project.Name)
-                                    </td>
-                                    <td>
-                                        @(Model.Tickets.First().TicketType.Name)
-                                    </td>
-                                    <td>
-                                        @(Model.Tickets.First().TicketPriority.Name)
-                                    </td>
-                                    <td>
-                                        @(Model.Tickets.First().TicketStatus.Name)
-                                    </td>
-                                    <td>
-                                        <a class="btn" asp-controller="Tickets" asp-action="Index" asp-route-filter="All">Details <i class="fa fa-arrow-circle-right"></i></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>-->
-                    <!-- /.row -->
-                <!--</div>-->
-                <!-- ./card-body -->
-            <!--</div>
+    <!-- /.card-header -->
+    <!--<div class="card-body">
+        <div class="row">
+            <table class="table table-striped" id="example3">
+                <thead>
+                    <tr>
+                        <th>
+                            Created By
+                        </th>
+                        <th>
+                            Developer
+                        </th>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Created
+                        </th>
+                        <th>
+                            Updated
+                        </th>
+                        <th>
+                            Project
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            Priority
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @(Model.Tickets.First().OwnerUser.FullName)
+                        </td>
+                        <td>
+                            @(Model.Tickets.First().DeveloperUser.FullName)
+                        </td>
+                        <td>
+                            @(Model.Tickets.First().Title)
+                        </td>
+                        <td>
+                            @(Model.Tickets.First().Created.ToString("MMM/dd yyyy"))
+                        </td>
+                        <td>
+                            @(Model.Tickets.First().Updated)
+                        </td>
+                        <td>
+                            @(Model.Tickets.First().Project.Name)
+                        </td>
+                        <td>
+                            @(Model.Tickets.First().TicketType.Name)
+                        </td>
+                        <td>
+                            @(Model.Tickets.First().TicketPriority.Name)
+                        </td>
+                        <td>
+                            @(Model.Tickets.First().TicketStatus.Name)
+                        </td>
+                        <td>
+                            <a class="btn" asp-controller="Tickets" asp-action="Index" asp-route-filter="All">Details <i class="fa fa-arrow-circle-right"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>-->
+    <!-- /.row -->
+    <!--</div>-->
+    <!-- ./card-body -->
+    <!--</div>
         </div>
     </div>
 
@@ -365,82 +367,82 @@
                         </button>
                     </div>
                 </div>-->
-                <!-- /.card-header -->
-                <!--<div class="card-body">
-                    <div class="row">
-                        <table class="table table-striped" id="example4">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Created By
-                                    </th>
-                                    <th>
-                                        Developer
-                                    </th>
-                                    <th>
-                                        Title
-                                    </th>
-                                    <th>
-                                        Created
-                                    </th>
-                                    <th>
-                                        Updated
-                                    </th>
-                                    <th>
-                                        Project
-                                    </th>
-                                    <th>
-                                        Type
-                                    </th>
-                                    <th>
-                                        Priority
-                                    </th>
-                                    <th>
-                                        Status
-                                    </th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).OwnerUser.FullName)
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).DeveloperUser.FullName)
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Title)
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Created.ToString("MMM/dd yyyy"))
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Updated)
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Project.Name)
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).TicketType.Name)
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).TicketPriority.Name)
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).TicketStatus.Name)
-                                    </td>
-                                    <td>
-                                        <a class="btn" asp-controller="Tickets" asp-action="Index" asp-route-filter="Resolved">Details <i class="fa fa-arrow-circle-right"></i></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>-->
-                    <!-- /.row -->
-                <!--</div>-->
-                <!-- ./card-body -->
-            <!--</div>
+    <!-- /.card-header -->
+    <!--<div class="card-body">
+        <div class="row">
+            <table class="table table-striped" id="example4">
+                <thead>
+                    <tr>
+                        <th>
+                            Created By
+                        </th>
+                        <th>
+                            Developer
+                        </th>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Created
+                        </th>
+                        <th>
+                            Updated
+                        </th>
+                        <th>
+                            Project
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            Priority
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).OwnerUser.FullName)
+                        </td>
+                        <td>
+                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).DeveloperUser.FullName)
+                        </td>
+                        <td>
+                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Title)
+                        </td>
+                        <td>
+                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Created.ToString("MMM/dd yyyy"))
+                        </td>
+                        <td>
+                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Updated)
+                        </td>
+                        <td>
+                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).Project.Name)
+                        </td>
+                        <td>
+                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).TicketType.Name)
+                        </td>
+                        <td>
+                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).TicketPriority.Name)
+                        </td>
+                        <td>
+                            @((Model.Tickets.FirstOrDefault(t => t.TicketStatus.Name == "Closed")).TicketStatus.Name)
+                        </td>
+                        <td>
+                            <a class="btn" asp-controller="Tickets" asp-action="Index" asp-route-filter="Resolved">Details <i class="fa fa-arrow-circle-right"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>-->
+    <!-- /.row -->
+    <!--</div>-->
+    <!-- ./card-body -->
+    <!--</div>
         </div>
     </div>-->
 }
