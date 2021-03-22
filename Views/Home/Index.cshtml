@@ -116,38 +116,48 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).OwnerUser.FullName)
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).DeveloperUser.FullName)
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).Title)
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).Created.ToString("MMM/dd yyyy"))
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).Updated)
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).Project.Name)
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).TicketType.Name)
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).TicketPriority.Name)
-                                    </td>
-                                    <td>
-                                        @((Model.Tickets.FirstOrDefault(t => t.TicketPriority.Name == "Critical")).TicketStatus.Name)
-                                    </td>
-                                    <td>
-                                        <a class="btn" asp-controller="Tickets" asp-action="Index" asp-route-filter="Critical">Details <i class="fa fa-arrow-circle-right"></i></a>
-                                    </td>
-                                </tr>
+                                @foreach (var ticket in Model.Tickets.Where(t => t.TicketPriority.Name == "Critical"))
+                                {
+                                    <tr>
+                                        <td>
+                                            @ticket.OwnerUser.FullName
+                                        </td>
+                                        <td>
+                                           @if(ticket.DeveloperUser is not null)
+                                            {
+                                                @ticket.DeveloperUser.FullName
+                                            }
+                                        </td>
+                                        <td>
+                                            @ticket.Title
+                                        </td>
+                                        <td>
+                                            @ticket.Created.ToString("MMM/dd yyyy")
+                                        </td>
+                                        <td>
+                                            @if (ticket.Updated is not null)
+                                            {
+                                                @ticket.Updated.Value.ToString("MMM/dd yyyy")
+                                            }
+                                        </td>
+                                        <td>
+                                            @ticket.Project.Name
+                                        </td>
+                                        <td>
+                                            @ticket.TicketType.Name
+                                        </td>
+                                        <td>
+                                            @ticket.TicketPriority.Name
+                                        </td>
+                                        <td>
+                                            @ticket.TicketStatus.Name
+                                        </td>
+                                        <td>
+                                            <a class="btn" asp-controller="Tickets" asp-action="Index" asp-route-filter="Critical">Details <i class="fa fa-arrow-circle-right"></i></a>
+                                        </td>
+                                    </tr>
+
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -174,7 +184,7 @@
                     </div>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body">
+                <!--<div class="card-body">
                     <div class="row">
                         <table class="table table-striped" id="example2">
                             <thead>
@@ -238,15 +248,15 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div>-->
                     <!-- /.row -->
-                </div>
+                <!--</div>-->
                 <!-- ./card-body -->
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <!--<div class="row">
         <div class="col">
             <div class="card">
                 <div class="card-header">
@@ -260,9 +270,9 @@
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-                </div>
+                </div>-->
                 <!-- /.card-header -->
-                <div class="card-body">
+                <!--<div class="card-body">
                     <div class="row">
                         <table class="table table-striped" id="example3">
                             <thead>
@@ -332,11 +342,11 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div>-->
                     <!-- /.row -->
-                </div>
+                <!--</div>-->
                 <!-- ./card-body -->
-            </div>
+            <!--</div>
         </div>
     </div>
 
@@ -354,9 +364,9 @@
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-                </div>
+                </div>-->
                 <!-- /.card-header -->
-                <div class="card-body">
+                <!--<div class="card-body">
                     <div class="row">
                         <table class="table table-striped" id="example4">
                             <thead>
@@ -426,13 +436,13 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div>-->
                     <!-- /.row -->
-                </div>
+                <!--</div>-->
                 <!-- ./card-body -->
-            </div>
+            <!--</div>
         </div>
-    </div>
+    </div>-->
 }
 else
 {
